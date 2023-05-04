@@ -25,7 +25,7 @@ class Commenter():
 
         # Check if the selections are valid
         selections = self.get_selections()
-        if selections == None:
+        if selections is None:
             return
         # Merge overlapping selections
         while self.merge_test(selections) == True:
@@ -33,7 +33,7 @@ class Commenter():
         # Start the undo action that can undo all commenting at once
         sci.beginUndoAction()
         # Loop over selections and comment them
-        for i, sel in enumerate(selections):
+        for sel in selections:
             if sci.text(sel[0]).lstrip().startswith(self.comment_string):
                 self.set_commenting(sel[0], sel[1], self._uncomment)
             else:
@@ -147,10 +147,7 @@ class Commenter():
         # Get the selected text and split it into lines
         selected_text = sci.selectedText()
         selected_list = selected_text.split("\n")
-        # Find the smallest indent level
-        indent_levels = []
-        for line in selected_list:
-            indent_levels.append(len(line) - len(line.lstrip()))
+        indent_levels = [len(line) - len(line.lstrip()) for line in selected_list]
         min_indent_level = min(indent_levels)
         # Add the commenting character to every line
         for i, line in enumerate(selected_list):

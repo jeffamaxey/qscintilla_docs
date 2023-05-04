@@ -62,11 +62,11 @@ class LexerC(PyQt5.Qsci.QsciLexerCustom):
         return "C"
     
     def description(self, style):
-        if style < len(self.styles):
-            description = "Custom lexer for the C programming language"
-        else:
-            description = ""
-        return description
+        return (
+            "Custom lexer for the C programming language"
+            if style < len(self.styles)
+            else ""
+        )
     
     def styleText(self, start, end):
         for k in self.flags.keys():
@@ -104,7 +104,7 @@ class LexerC(PyQt5.Qsci.QsciLexerCustom):
             if len(tokens) > i+1:
                 next_token_text = tokens[i+1][0]
             token_length = token[1]
-            
+
             ## Token sequence styling
             # String
             if self.flags["String"] == True:
@@ -139,7 +139,7 @@ class LexerC(PyQt5.Qsci.QsciLexerCustom):
                     self.setStyling(token_length, self.styles["MutilineComment"])
                     self.flags["MutilineComment"] = True
                     continue
-            
+
             ## Sprecial token styling
             if token_text in self.keyword_list:
                 # Keyword
@@ -147,8 +147,8 @@ class LexerC(PyQt5.Qsci.QsciLexerCustom):
             else:
                 # Style with the default style
                 self.setStyling(token_length, self.styles["Default"])
-        
-        
+
+
         # Folding
         lines = self.parent().text().splitlines()
         # Initialize the folding variables
@@ -169,8 +169,7 @@ class LexerC(PyQt5.Qsci.QsciLexerCustom):
                 # Adjust the folding level first
                 fold_level += open_count
                 fold_level -= close_count
-                if fold_level <= 0:
-                    fold_level = 0
+                fold_level = max(fold_level, 0)
                 # Set the line's adjusted folding level
                 editor.SendScintilla(PyQt5.Qsci.QsciScintilla.SCI_SETFOLDLEVEL, line_number, fold_level | PyQt5.Qsci.QsciScintilla.SC_FOLDLEVELHEADERFLAG)
             print(fold_level)

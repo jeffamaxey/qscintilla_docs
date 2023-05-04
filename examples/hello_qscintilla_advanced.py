@@ -3,6 +3,7 @@
 Created by Matic Kukovec
 """
 
+
 # Import the PyQt5 module with some of the GUI widgets
 import PyQt5.QtWidgets
 import PyQt5
@@ -24,7 +25,7 @@ editor.show()
 editor.setText("Hello World\n")
 # Append more text
 for i in range(100):
-    editor.append("This is line {}\n".format(i))
+    editor.append(f"This is line {i}\n")
 # Find a specific line
 editor.findFirst("This is line 55", False, False, False, False, True)
 # Find a specific line backwards

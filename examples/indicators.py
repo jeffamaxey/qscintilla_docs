@@ -110,7 +110,7 @@ def indicator_click(line, index, keys):
         position
     )
     # Display the information
-    print("indicator clicked in line '{}', index '{}', value '{}'".format(line, index, value))
+    print(f"indicator clicked in line '{line}', index '{index}', value '{value}'")
 
 def indicator_released(line, index, keys):
     # Use the low level SendScintilla function to get the indicator's value
@@ -123,7 +123,7 @@ def indicator_released(line, index, keys):
         position
     )
     # Display the information
-    print("indicator released in line '{}', index '{}', value '{}'".format(line, index, value))
+    print(f"indicator released in line '{line}', index '{index}', value '{value}'")
 
 editor.indicatorClicked.connect(indicator_click)
 editor.indicatorReleased.connect(indicator_released)

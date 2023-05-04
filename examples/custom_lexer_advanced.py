@@ -91,9 +91,10 @@ class LexerNim(PyQt5.Qsci.QsciLexerCustom):
                     break
             clicked_token = text[start:end].strip()
             # Print the token and replace it with the string "CLICK"
-            print("'" + clicked_token + "'")
+            print(f"'{clicked_token}'")
             parent.setSelection(0, start+1, 0, end)
             parent.replaceSelectedText("CLICK")
+
         # Attach the hotspot click signal to a predefined function
         parent.SCN_HOTSPOTCLICK.connect(hotspot_click)
             
@@ -112,11 +113,11 @@ class LexerNim(PyQt5.Qsci.QsciLexerCustom):
         return "Nim"
     
     def description(self, style):
-        if style < len(self.styles):
-            description = "Custom lexer for the Nim programming languages"
-        else:
-            description = ""
-        return description
+        return (
+            "Custom lexer for the Nim programming languages"
+            if style < len(self.styles)
+            else ""
+        )
     
     def styleText(self, start, end):
         # Initialize the styling

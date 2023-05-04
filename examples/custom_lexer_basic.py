@@ -68,11 +68,11 @@ class LexerNim(PyQt5.Qsci.QsciLexerCustom):
         return "Nim"
     
     def description(self, style):
-        if style < len(self.styles):
-            description = "Custom lexer for the Nim programming languages"
-        else:
-            description = ""
-        return description
+        return (
+            "Custom lexer for the Nim programming languages"
+            if style < len(self.styles)
+            else ""
+        )
     
     def styleText(self, start, end):
         # Initialize the styling
@@ -88,7 +88,7 @@ class LexerNim(PyQt5.Qsci.QsciLexerCustom):
         text = self.parent().text()[start:end]
         tokens = [(token, len(bytearray(token, "utf-8"))) for token in splitter.findall(text)]
         # Style the text in a loop
-        for i, token in enumerate(tokens):
+        for token in tokens:
             if token[0] in self.keyword_list:
                 # Keyword
                 self.setStyling(token[1], self.styles["Keyword"])

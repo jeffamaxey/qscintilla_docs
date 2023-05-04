@@ -30,16 +30,7 @@ editor.setMarginsForegroundColor(PyQt5.QtGui.QColor(0x00, 0x00, 0xff, 0xff))
 """
 Line number margin
 """
-# Set margin 0 as the line margin (this is the default, so you can skip this step)
-# One way is to set the margins type with 'setMarginType', 
-# the other way is to use the 'setMarginLineNumbers' function.
-if True:
-    editor.setMarginType(0, PyQt5.Qsci.QsciScintilla.NumberMargin)
-else:
-    # This function can also be used on a margin of a type other then
-    # NumberMargin, but then the line numbers overlap or overwrite 
-    # the other content of the margin
-    editor.setMarginLineNumbers(0, True)
+editor.setMarginType(0, PyQt5.Qsci.QsciScintilla.NumberMargin)
 # Set the width of the line number margin with a string, which sets the width
 # to the width of the entered string text. There is also an alternative function
 # with the same name which you can use to set the width directly in number of pixels.
@@ -63,7 +54,7 @@ editor.setMarginMarkerMask(
 )
 # Just for info we display the margin mask, which should be: 0b1111111111111111111111111
 # which means all 32 markers are enabled.
-editor.append("Margin 1 marker mask: {}".format(bin(editor.marginMarkerMask(1))))
+editor.append(f"Margin 1 marker mask: {bin(editor.marginMarkerMask(1))}")
 # Create and add marker on margin 1 and add it to line 0
 marker = editor.markerDefine(scaled_image, 1)
 editor.markerAdd(1, 1)
@@ -131,8 +122,8 @@ editor.setMarginSensitivity(1, True)
 def margin_click(margin, line, state):
     # margin parameter = Integer (margin_number)
     # line parameter = Integer (line_number)
-    # state parameter = Qt.KeyboardModifiers (OR-ed together) 
-    print("Margin {} clicked at line {}!".format(margin, line))
+    # state parameter = Qt.KeyboardModifiers (OR-ed together)
+    print(f"Margin {margin} clicked at line {line}!")
 editor.marginClicked.connect(margin_click)
 
 # For the QScintilla editor to properly process events we need to add it to
